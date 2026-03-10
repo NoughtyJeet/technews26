@@ -6,16 +6,28 @@ import { createClient } from '@/lib/supabase/server';
 import { logout } from '@/app/auth/actions';
 
 export default async function Header() {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    // Optionally fetch profile to check for admin role
+    let user = null;
     let isAdmin = false;
-    if (user) {
-        const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-        if (profile?.role === 'admin') {
-            isAdmin = true;
+
+    try {
+        const supabase = await createClient();
+        if (supabase) {
+            const { data } = await supabase.auth.getUser();
+            user = data.user;
+
+            if (user) {
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', user.id)
+                    .single();
+                if (profile?.role === 'admin') {
+                    isAdmin = true;
+                }
+            }
         }
+    } catch (error) {
+        console.error('Header Auth Error:', error);
     }
     return (
         <header className="sticky top-0 z-50 w-full glass border-b border-white/5 bg-black/40">

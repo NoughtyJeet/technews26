@@ -10,7 +10,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
-  const posts = await getPosts(5); // get some mock posts
+  let posts = [];
+  try {
+    posts = await getPosts(5);
+  } catch (error) {
+    console.error('Home Page Fetch Error:', error);
+  }
 
   return (
     <div className="max-w-[1600px] mx-auto p-4 lg:p-8 flex flex-col lg:flex-row gap-8">
@@ -29,7 +34,7 @@ export default async function Home() {
 
         <BentoGrid>
           {/* Featured Hero Post - 2 cols, 2 rows */}
-          {posts && posts[0] && (
+          {posts && posts[0] ? (
             <BentoCard colSpan={2} rowSpan={2} className="min-h-[400px]">
               <Link href={`/post/${posts[0].slug}`} className="absolute inset-0 z-20">
                 <span className="sr-only">Read Post</span>
@@ -53,6 +58,10 @@ export default async function Home() {
                 <p className="text-zinc-300 mb-4 line-clamp-2">{posts[0].custom_excerpt}</p>
               </div>
             </BentoCard>
+          ) : (
+            <BentoCard colSpan={2} rowSpan={2} className="min-h-[400px] flex items-center justify-center bg-zinc-900/50">
+              <p className="text-zinc-500">No featured articles available.</p>
+            </BentoCard>
           )}
 
           {/* Spline Gadget Vault */}
@@ -71,7 +80,7 @@ export default async function Home() {
           </BentoCard>
 
           {/* Other recent posts */}
-          {posts && posts.slice(1, 4).map((post: any) => (
+          {posts && posts.length > 1 && posts.slice(1, 4).map((post: any) => (
             <BentoCard key={post.id} colSpan={1} rowSpan={1} className="p-6 flex flex-col justify-between min-h-[250px] relative">
               <Link href={`/post/${post.slug}`} className="absolute inset-0 z-20">
                 <span className="sr-only">Read Post</span>
