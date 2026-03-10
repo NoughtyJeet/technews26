@@ -1,4 +1,4 @@
-import { streamText, createDataStreamResponse } from 'ai';
+import { streamText } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
 // Allow streaming responses up to 30 seconds
