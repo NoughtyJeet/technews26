@@ -5,7 +5,7 @@ import { google } from '@ai-sdk/google';
 export const maxDuration = 30;
 
 // Read Gemini API key from environment
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_GEMINI_API_KEY;
 
 export async function POST(req: Request) {
     console.log('Chat API called');
