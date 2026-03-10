@@ -1,21 +1,23 @@
-import { streamText } from 'ai';
-import { google } from '@ai-sdk/google';
+import { streamText, createDataStreamResponse } from 'ai';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-// Read Gemini API key from environment
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_GEMINI_API_KEY;
+// Initialize Google provider with the key from environment
+const google = createGoogleGenerativeAI({
+    apiKey: process.env.GEMINI_API_KEY || process.env.NEXT_GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+});
 
 export async function POST(req: Request) {
-    console.log('Chat API called');
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     const { messages } = await req.json();
     console.log('Received messages:', messages);
 
-    if (!GEMINI_API_KEY) {
-        console.log('No GEMINI_API_KEY set, using mock mode');
+    if (!apiKey) {
+        console.log('No Gemini API key set, using mock mode');
         const lastMessage = messages[messages.length - 1]?.content || 'Hello';
-        const responseText = `[technews26 Pilot] You asked about: "${lastMessage}". Set GEMINI_API_KEY for full AI responses!`;
+        const responseText = `[technews26 Pilot] Hello! I see your message: "${lastMessage}". Please set GOOGLE_GENERATIVE_AI_API_KEY or NEXT_GEMINI_API_KEY in your environment for a full AI response!`;
 
         // Create a data stream in Vercel AI SDK format
         const encoder = new TextEncoder();
