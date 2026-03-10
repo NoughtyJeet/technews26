@@ -12,28 +12,32 @@ export const api = new GhostContentAPI({
 export async function getPosts(limit = 10) {
     // 1) If Supabase is configured, prefer it
     if (supabase) {
-        const { data, error } = await supabase
-            .from('posts')
-            .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-            .order('published_at', { ascending: false })
-            .limit(limit);
+        try {
+            const { data, error } = await supabase
+                .from('posts')
+                .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
+                .order('published_at', { ascending: false })
+                .limit(limit);
 
-        if (!error && data && (!Array.isArray(data) || data.length > 0)) {
-            return data.map((row: any) => ({
-                id: row.id,
-                slug: row.slug,
-                title: row.title,
-                custom_excerpt: row.excerpt,
-                feature_image: row.feature_image,
-                published_at: row.published_at,
-                html: row.html,
-                authors: row.author_name ? [{ name: row.author_name }] : [],
-                tags: Array.isArray(row.tags)
-                    ? row.tags.map((name: string) => ({ name }))
-                    : [],
-            }));
+            if (!error && data && (!Array.isArray(data) || data.length > 0)) {
+                return data.map((row: any) => ({
+                    id: row.id,
+                    slug: row.slug,
+                    title: row.title,
+                    custom_excerpt: row.excerpt,
+                    feature_image: row.feature_image,
+                    published_at: row.published_at,
+                    html: row.html,
+                    authors: row.author_name ? [{ name: row.author_name }] : [],
+                    tags: Array.isArray(row.tags)
+                        ? row.tags.map((name: string) => ({ name }))
+                        : [],
+                }));
+            }
+            if (error) console.error('Supabase getPosts error:', error);
+        } catch (e) {
+            console.error('Supabase getPosts exception:', e);
         }
-        console.error('Supabase getPosts error, falling back to Ghost/mock:', error);
     }
 
     // 2) If Ghost is not configured, use mock data
@@ -60,28 +64,32 @@ export async function getPosts(limit = 10) {
 export async function getSinglePost(postSlug: string) {
     // 1) Supabase first if available
     if (supabase) {
-        const { data, error } = await supabase
-            .from('posts')
-            .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-            .eq('slug', postSlug)
-            .maybeSingle();
+        try {
+            const { data, error } = await supabase
+                .from('posts')
+                .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
+                .eq('slug', postSlug)
+                .maybeSingle();
 
-        if (!error && data && (!Array.isArray(data) || data.length > 0)) {
-            return {
-                id: data.id,
-                slug: data.slug,
-                title: data.title,
-                custom_excerpt: data.excerpt,
-                feature_image: data.feature_image,
-                published_at: data.published_at,
-                html: data.html,
-                authors: data.author_name ? [{ name: data.author_name }] : [],
-                tags: Array.isArray(data.tags)
-                    ? data.tags.map((name: string) => ({ name }))
-                    : [],
-            };
+            if (!error && data) {
+                return {
+                    id: data.id,
+                    slug: data.slug,
+                    title: data.title,
+                    custom_excerpt: data.excerpt,
+                    feature_image: data.feature_image,
+                    published_at: data.published_at,
+                    html: data.html,
+                    authors: data.author_name ? [{ name: data.author_name }] : [],
+                    tags: Array.isArray(data.tags)
+                        ? data.tags.map((name: string) => ({ name }))
+                        : [],
+                };
+            }
+            if (error) console.error('Supabase getSinglePost error:', error);
+        } catch (e) {
+            console.error('Supabase getSinglePost exception:', e);
         }
-        console.error('Supabase getSinglePost error, falling back to Ghost/mock:', error);
     }
 
     // 2) If Ghost is not configured, use mock data
