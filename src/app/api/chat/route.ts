@@ -17,26 +17,25 @@ export async function POST(req: Request) {
     if (!apiKey) {
         console.log('No Gemini API key set, using mock mode');
         const lastMessage = messages[messages.length - 1]?.content || 'Hello';
-        const responseText = `[technews26 Pilot] Hello! I see your message: "${lastMessage}". Please set GOOGLE_GENERATIVE_AI_API_KEY or NEXT_GEMINI_API_KEY in your environment for a full AI response!`;
+        const responseText = `[technews26 Pilot] Hello! I see your message: "${lastMessage}". Please set GOOGLE_GENERATIVE_AI_API_KEY or NEXT_GEMINI_API_KEY in your environment to unlock my full AI potential!`;
 
-        // Create a data stream in Vercel AI SDK format
+        // Create a data stream in Vercel AI SDK Data Stream protocol format (0: is text chunk)
         const encoder = new TextEncoder();
         const stream = new ReadableStream({
             start(controller) {
-                // Message annotation
-                controller.enqueue(encoder.encode('f:{"messageId":"mock-response"}\n'));
-                // Text content (format: 0:"text content")
+                // Return mock text as a data stream chunk
                 const chunk = `0:${JSON.stringify(responseText)}\n`;
                 controller.enqueue(encoder.encode(chunk));
-                // Finish annotation
-                controller.enqueue(encoder.encode('e:{"finishReason":"stop"}\n'));
                 controller.close();
             }
         });
 
         console.log('Returning mock data stream response');
         return new Response(stream, {
-            headers: { "Content-Type": "text/plain; charset=utf-8" }
+            headers: {
+                "Content-Type": "text/plain; charset=utf-8",
+                "x-vercel-ai-data-stream": "v1"
+            }
         });
     }
 
@@ -52,22 +51,10 @@ export async function POST(req: Request) {
         return result.toTextStreamResponse();
     } catch (error: any) {
         console.error('Gemini API error:', error);
-        console.error('Error message:', error.message);
-        console.error('Error cause:', error.cause);
-        console.error('Error data:', JSON.stringify(error.data, null, 2));
-        console.error('Full error:', JSON.stringify(error, null, 2));
 
-        // Return error as a stream so frontend can parse it
-        const encoder = new TextEncoder();
-        const errorStream = new ReadableStream({
-            start(controller) {
-                const errorText = `[Error] Failed to get AI response: ${error.message || 'Unknown error'}`;
-                controller.enqueue(encoder.encode(`0:${JSON.stringify(errorText)}\n`));
-                controller.close();
-            }
-        });
-
-        return new Response(errorStream, {
+        // Return error as a plain text response
+        return new Response(`[Error] ${error.message || 'Failed to connect to AI'}`, {
+            status: 500,
             headers: { "Content-Type": "text/plain; charset=utf-8" }
         });
     }

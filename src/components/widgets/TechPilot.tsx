@@ -14,17 +14,15 @@ export default function TechPilot() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
 
-    // Auto-scroll to bottom when messages change
+    // Auto-scroll to bottom
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isLoading]);
 
-    // Focus input on mount
-    useEffect(() => {
-        inputRef.current?.focus();
-    }, []);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,7 +40,6 @@ export default function TechPilot() {
         setError(null);
 
         try {
-            console.log('Sending chat request...');
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -54,55 +51,40 @@ export default function TechPilot() {
                 })
             });
 
-            console.log('Response status:', response.status);
-
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(errorText || `Error ${response.status}`);
             }
 
-            const text = await response.text();
-            console.log('Response text:', text);
-
-            // Parse the data stream format
-            const lines = text.split('\n');
-            let content = '';
-
-            for (const line of lines) {
-                if (line.startsWith('0:')) {
-                    // Text content line
-                    try {
-                        const jsonStr = line.slice(2);
-                        const parsed = JSON.parse(jsonStr);
-                        content += parsed;
-                    } catch {
-                        // If parsing fails, just add the raw content
-                        content += line.slice(2);
-                    }
-                }
+            if (!response.body) {
+                throw new Error('No response body');
             }
 
-            // If no content parsed from data stream, use raw text
-            if (!content) {
-                content = text;
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            const assistantId = (Date.now() + 1).toString();
+            setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }]);
+
+            let accumulatedContent = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                accumulatedContent += chunk;
+
+                setMessages(prev => prev.map(msg =>
+                    msg.id === assistantId ? { ...msg, content: accumulatedContent } : msg
+                ));
             }
-
-            const assistantMessage: Message = {
-                id: (Date.now() + 1).toString(),
-                role: 'assistant',
-                content: content || '[No response received]'
-            };
-
-            setMessages(prev => [...prev, assistantMessage]);
         } catch (err) {
-            console.error('Chat error:', err);
-            setError(err instanceof Error ? err.message : 'Failed to send message');
+            console.error('Tech Pilot Error:', err);
+            setError(err instanceof Error ? err.message : 'Failed to connect to AI');
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value);
     };
 
     return (
@@ -139,7 +121,7 @@ export default function TechPilot() {
                         </div>
                     ))
                 )}
-                {isLoading && (
+                {isLoading && messages[messages.length - 1]?.content === '' && (
                     <div className="text-xs text-[var(--color-neon-purple)] animate-pulse flex items-center gap-2 bg-black/40 p-2.5 rounded-xl rounded-bl-sm max-w-[90%] border border-white/5 w-fit">
                         <Bot className="w-4 h-4 shrink-0" />
                         <div className="flex items-center gap-1">
@@ -151,7 +133,7 @@ export default function TechPilot() {
                 )}
                 {error && (
                     <div className="text-xs text-red-400 bg-red-500/10 p-2.5 rounded-xl max-w-[90%] border border-red-500/20">
-                        Error: {error}
+                        {error}
                     </div>
                 )}
                 <div ref={messagesEndRef} />
@@ -159,7 +141,7 @@ export default function TechPilot() {
 
             <form onSubmit={handleSubmit} className="p-3 border-t border-white/10 flex gap-2 bg-black/20 relative z-10">
                 <input
-                    ref={inputRef}
+                    autoFocus
                     value={input}
                     onChange={handleInputChange}
                     placeholder="Ask about tech leaks..."
