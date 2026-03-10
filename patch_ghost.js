@@ -1,110 +1,16 @@
-import GhostContentAPI from '@tryghost/content-api';
-import { supabase } from './supabaseClient';
+const fs = require('fs');
+const path = require('path');
 
-// Create API instance with site credentials
-// Fallback to mocking if credentials aren't provided
-export const api = new GhostContentAPI({
-    url: process.env.GHOST_API_URL || 'https://demo.ghost.io',
-    key: process.env.GHOST_CONTENT_API_KEY || '22444f78447824223cefc48062', // standard demo key
-    version: "v5.0"
-});
+const filePath = path.join(__dirname, 'src/lib/ghost.ts');
+let content = fs.readFileSync(filePath, 'utf8');
 
-export async function getPosts(limit = 10) {
-    // 1) If Supabase is configured, prefer it
-    if (supabase) {
-        const { data, error } = await supabase
-            .from('posts')
-            .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-            .order('published_at', { ascending: false })
-            .limit(limit);
+// Update getPosts fallback to check for empty array
+content = content.replace(
+    /if \(!error && data\) \{/g,
+    'if (!error && data && (!Array.isArray(data) || data.length > 0)) {'
+);
 
-        if (!error && data && (!Array.isArray(data) || data.length > 0)) {
-            return data.map((row: any) => ({
-                id: row.id,
-                slug: row.slug,
-                title: row.title,
-                custom_excerpt: row.excerpt,
-                feature_image: row.feature_image,
-                published_at: row.published_at,
-                html: row.html,
-                authors: row.author_name ? [{ name: row.author_name }] : [],
-                tags: Array.isArray(row.tags)
-                    ? row.tags.map((name: string) => ({ name }))
-                    : [],
-            }));
-        }
-        console.error('Supabase getPosts error, falling back to Ghost/mock:', error);
-    }
-
-    // 2) If Ghost is not configured, use mock data
-    if (!process.env.GHOST_API_URL) {
-        return mockPosts();
-    }
-
-    try {
-        return await api.posts
-            .browse({
-                limit,
-                include: 'tags,authors',
-            })
-            .catch((err: any) => {
-                console.error(err);
-                return mockPosts();
-            });
-    } catch (error) {
-        console.error(error);
-        return mockPosts();
-    }
-}
-
-export async function getSinglePost(postSlug: string) {
-    // 1) Supabase first if available
-    if (supabase) {
-        const { data, error } = await supabase
-            .from('posts')
-            .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-            .eq('slug', postSlug)
-            .maybeSingle();
-
-        if (!error && data && (!Array.isArray(data) || data.length > 0)) {
-            return {
-                id: data.id,
-                slug: data.slug,
-                title: data.title,
-                custom_excerpt: data.excerpt,
-                feature_image: data.feature_image,
-                published_at: data.published_at,
-                html: data.html,
-                authors: data.author_name ? [{ name: data.author_name }] : [],
-                tags: Array.isArray(data.tags)
-                    ? data.tags.map((name: string) => ({ name }))
-                    : [],
-            };
-        }
-        console.error('Supabase getSinglePost error, falling back to Ghost/mock:', error);
-    }
-
-    // 2) If Ghost is not configured, use mock data
-    if (!process.env.GHOST_API_URL) {
-        return mockPosts().find(post => post.slug === postSlug);
-    }
-
-    try {
-        return await api.posts
-            .read({
-                slug: postSlug
-            }, { include: 'tags,authors' })
-            .catch((err: any) => {
-                console.error(err);
-                return mockPosts().find(post => post.slug === postSlug);
-            });
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
-
-function mockPosts() {
+const newMockPosts = `function mockPosts() {
     return [
         {
             id: "1",
@@ -146,7 +52,7 @@ function mockPosts() {
             custom_excerpt: "Cloud AI is expensive and slow. The future is running massive open-weight models locally on your NPU-equipped laptop.",
             feature_image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
             published_at: new Date(Date.now() - 259200000).toISOString(),
-            html: "<h2>The Shift From Cloud to Edge</h2><p>As privacy concerns and cloud API costs rise, developers and power users are turning to local AI. By 2026, the standard for a \"Pro\" laptop will be its ability to run a 30B parameter model locally.</p><h3>The Importance of NPUs</h3><p>Neural Processing Units (NPUs) are becoming as critical as GPUs. These specialized chips allow continuous AI execution without draining the battery or causing extreme thermal throttling.</p><h2>FAQ: Local AI Execution</h2><h3>Do I need a GPU to run local AI?</h3><p>While GPUs are currently best, modern NPUs (like Apple's Neural Engine or Qualcomm's Hexagon) are rapidly closing the gap for inference tasks.</p>",
+            html: "<h2>The Shift From Cloud to Edge</h2><p>As privacy concerns and cloud API costs rise, developers and power users are turning to local AI. By 2026, the standard for a \\"Pro\\" laptop will be its ability to run a 30B parameter model locally.</p><h3>The Importance of NPUs</h3><p>Neural Processing Units (NPUs) are becoming as critical as GPUs. These specialized chips allow continuous AI execution without draining the battery or causing extreme thermal throttling.</p><h2>FAQ: Local AI Execution</h2><h3>Do I need a GPU to run local AI?</h3><p>While GPUs are currently best, modern NPUs (like Apple's Neural Engine or Qualcomm's Hexagon) are rapidly closing the gap for inference tasks.</p>",
             authors: [{ name: "Tech Hunter AI" }],
             tags: [{ name: "AI" }, { name: "Hardware" }]
         },
@@ -195,4 +101,10 @@ function mockPosts() {
             tags: [{ name: "Nvidia" }]
         }
     ];
-}
+}`;
+
+// Replace the entire mockPosts function
+content = content.replace(/function mockPosts\(\) \{[\s\S]*\}?/, newMockPosts);
+
+fs.writeFileSync(filePath, content, 'utf8');
+console.log('ghost.ts successfully updated with fallback logic and new mock posts!');

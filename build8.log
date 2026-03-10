@@ -1,0 +1,29 @@
+
+> technews26@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\jparg\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\jparg\Downloads\technews26\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 14.6s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/widgets/TechPilot.tsx:28:34
+Type error: Parameter 'm' implicitly has an 'any' type.
+
+  26 |                     </div>
+  27 |                 ) : (
+> 28 |                     messages.map(m => (
+     |                                  ^
+  29 |                         <div key={m.id} className={`text-xs ${m.role === 'user' ? 'text-white ml-auto bg-white/10 p-2.5 rounded-xl rounded-br-sm max-w-[85%]' : 'text-[var(--color-neon-cyan)] bg-black/40 p-2.5 rounded-xl rounded-bl-sm max-w-[90%] flex gap-2 border border-white/5'}`}>
+  30 |                             {m.role !== 'user' && <Bot className="w-4 h-4 shrink-0 mt-0.5" />}
+  31 |                             <p className="whitespace-pre-wrap">{m.content}</p>
+Next.js build worker exited with code: 1 and signal: null

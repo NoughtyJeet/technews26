@@ -1,0 +1,77 @@
+{
+  "name": "Antigravity Pipeline (Exa -> Claude -> Ghost)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [ { "field": "hours", "hoursInterval": 3 } ] }
+      },
+      "id": "1",
+      "name": "Cron (3-Hour Pulse)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [ 100, 300 ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.exa.ai/search",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "exaApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "query": "latest iphone 17e OR mwc 2026 tri-fold leak OR nvidia M-series blackwell latest leak",
+          "numResults": 5,
+          "useAutoprompt": true,
+          "publishedDate": "last 24h"
+        }
+      },
+      "id": "2",
+      "name": "Exa.ai Hunter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [ 300, 300 ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-7-sonnet-20250219",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Write as a Senior Tech Editor. Using these search results, create a viral tech blog. Structure: 1. Hook (Why Now) 2. Deep Dive (Specs) 3. The Antigravity Verdict. 4. Tech Pilot Summary bullet points. Return only HTML."
+          }
+        ]
+      },
+      "id": "3",
+      "name": "Claude 3.7 Architect",
+      "type": "n8n-nodes-base.anthropic",
+      "typeVersion": 1,
+      "position": [ 500, 300 ]
+    },
+    {
+      "parameters": {
+        "resource": "post",
+        "operation": "create",
+        "title": "={{ $json.title }}",
+        "html": "={{ $json.content }}",
+        "status": "draft",
+        "tags": [ "AI Draft", "2026" ]
+      },
+      "id": "4",
+      "name": "Ghost CMS Draft",
+      "type": "n8n-nodes-base.ghost",
+      "typeVersion": 1,
+      "position": [ 700, 300 ]
+    }
+  ],
+  "connections": {
+    "Cron (3-Hour Pulse)": {
+      "main": [ [ { "node": "Exa.ai Hunter", "type": "main", "index": 0 } ] ]
+    },
+    "Exa.ai Hunter": {
+      "main": [ [ { "node": "Claude 3.7 Architect", "type": "main", "index": 0 } ] ]
+    },
+    "Claude 3.7 Architect": {
+      "main": [ [ { "node": "Ghost CMS Draft", "type": "main", "index": 0 } ] ]
+    }
+  }
+}

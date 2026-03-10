@@ -1,0 +1,36 @@
+
+> technews26@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\jparg\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\jparg\Downloads\technews26\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./Downloads/technews26/src/components/layout/Footer.tsx:62:41
+Parsing ecmascript source code failed
+  60 |                 <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+  61 |                     <p>┬⌐ {new Date().getFullYear()} Antigravity Tech Blog. Crafted with Vibe Coding.</p>
+> 62 |                     <p>Lighthouse Score > 95 target.</p>
+     |                                         ^
+  63 |                 </div>
+  64 |             </div>
+  65 |         </footer>
+
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+
+Import trace:
+  Server Component:
+    ./Downloads/technews26/src/components/layout/Footer.tsx
+    ./Downloads/technews26/src/app/layout.tsx
+
+
+    at <unknown> (./Downloads/technews26/src/components/layout/Footer.tsx:62:41)

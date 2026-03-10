@@ -1,0 +1,28 @@
+
+> technews26@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\jparg\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\jparg\Downloads\technews26\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 4.2s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/5) ...
+  Generating static pages using 7 workers (1/5) 
+  Generating static pages using 7 workers (2/5) 
+  Generating static pages using 7 workers (3/5) 
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: Cannot read properties of undefined (reading 'trim')
+    at rc (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\Downloads_technews26_2b45e087._.js:65:83917) {
+  digest: '2407217868'
+}
+Export encountered an error on /page: /, exiting the build.
+Γ¿» Next.js build worker exited with code: 1 and signal: null

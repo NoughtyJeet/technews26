@@ -1,0 +1,67 @@
+
+> technews26@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\jparg\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\jparg\Downloads\technews26\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 7.9s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/25) ...
+ΓÜá metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+  Generating static pages using 7 workers (6/25) 
+  Generating static pages using 7 workers (12/25) 
+Supabase getPosts error, falling back to Ghost/mock: null
+Supabase getPosts error, falling back to Ghost/mock: null
+Supabase getPosts error, falling back to Ghost/mock: null
+  Generating static pages using 7 workers (18/25) 
+Supabase getPosts error, falling back to Ghost/mock: null
+Γ£ô Generating static pages using 7 workers (25/25) in 1334.4ms
+  Finalizing page optimization ...
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ Γùï /about
+Γö£ Γùï /admin
+Γö£ Γùï /admin/ads
+Γö£ ╞Æ /admin/articles
+Γö£ Γùï /admin/articles/new
+Γö£ Γùï /admin/categories
+Γö£ ╞Æ /admin/dashboard
+Γö£ Γùï /admin/login
+Γö£ Γùï /admin/settings
+Γö£ ╞Æ /api/admin/posts
+Γö£ ╞Æ /api/chat
+Γö£ ╞Æ /api/test-posts
+Γö£ Γùï /apple
+Γö£ ╞Æ /auth/callback
+Γö£ Γùï /contact
+Γö£ ╞Æ /dashboard
+Γö£ Γùï /forgot-password
+Γö£ Γùï /icon.png
+Γö£ Γùï /login
+Γö£ Γùï /mwc
+Γö£ Γùï /opengraph-image.png
+Γö£ ╞Æ /post/[slug]
+Γö£ Γùï /privacy
+Γö£ Γùï /signup
+Γö£ Γùï /terms
+Γöö Γùï /vibe
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

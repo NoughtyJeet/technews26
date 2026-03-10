@@ -1,0 +1,29 @@
+
+> technews26@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\jparg\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\jparg\Downloads\technews26\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 3.7s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/apple/page.tsx:13:38
+Type error: Parameter 'post' implicitly has an 'any' type.
+
+  11 |
+  12 |     // Filter mock posts for "Apple"
+> 13 |     const applePosts = posts?.filter(post => post.tags?.some((t: any) => t.name === 'Apple'));
+     |                                      ^
+  14 |
+  15 |     return (
+  16 |         <div className="max-w-[1600px] mx-auto p-4 lg:p-8 flex flex-col lg:flex-row gap-8">
+Next.js build worker exited with code: 1 and signal: null
