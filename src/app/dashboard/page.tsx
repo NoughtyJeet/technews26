@@ -7,6 +7,9 @@ export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
     const supabase = await createClient()
+    if (!supabase) {
+        redirect('/login?message=System configuration error: Supabase is not initialized')
+    }
 
     // Verify User Session
     const { data: { user }, error } = await supabase.auth.getUser()

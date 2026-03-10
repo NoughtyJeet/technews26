@@ -13,6 +13,9 @@ export async function login(formData: FormData) {
     }
 
     const supabase = await createClient()
+    if (!supabase) {
+        redirect('/login?message=System configuration error: Supabase is not initialized')
+    }
 
     const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -36,6 +39,9 @@ export async function adminLogin(formData: FormData) {
     }
 
     const supabase = await createClient()
+    if (!supabase) {
+        redirect('/admin/login?message=System configuration error: Supabase is not initialized')
+    }
 
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -74,6 +80,9 @@ export async function signup(formData: FormData) {
     }
 
     const supabase = await createClient()
+    if (!supabase) {
+        redirect('/signup?message=System configuration error: Supabase is not initialized')
+    }
 
     const { error } = await supabase.auth.signUp({
         email,
@@ -95,12 +104,17 @@ export async function signup(formData: FormData) {
 
 export async function logout() {
     const supabase = await createClient()
-    await supabase.auth.signOut()
+    if (supabase) {
+        await supabase.auth.signOut()
+    }
     redirect('/')
 }
 
 export async function signInWithGoogle() {
     const supabase = await createClient()
+    if (!supabase) {
+        redirect('/login?message=System configuration error: Supabase is not initialized')
+    }
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {

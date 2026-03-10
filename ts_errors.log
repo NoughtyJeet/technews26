@@ -1,0 +1,10 @@
+src/app/auth/actions.ts(17,29): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(40,56): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(51,41): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(54,19): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(78,29): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(98,11): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/actions.ts(104,35): error TS18047: 'supabase' is possibly 'null'.
+src/app/auth/callback/route.ts(11,33): error TS18047: 'supabase' is possibly 'null'.
+src/app/dashboard/page.tsx(12,45): error TS18047: 'supabase' is possibly 'null'.
+src/app/dashboard/page.tsx(18,37): error TS18047: 'supabase' is possibly 'null'.

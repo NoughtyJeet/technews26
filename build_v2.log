@@ -1,0 +1,200 @@
+
+> technews26@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 9.4s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/25) ...
+Header Auth Error: Error: Dynamic server usage: Route /_not-found couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /_not-found couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+ΓÜá metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+Header Auth Error: Error: Dynamic server usage: Route /admin/ads couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin/ads couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /admin/articles/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin/articles/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /about couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /about couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /admin/login couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin/login couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+  Generating static pages using 7 workers (6/25) 
+  Generating static pages using 7 workers (12/25) 
+Header Auth Error: Error: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /apple couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /apple couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /contact couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /contact couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /forgot-password couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /forgot-password couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /mwc couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /mwc couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /login couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /login couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route / couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route / couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /privacy couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /privacy couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /signup couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /signup couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Header Auth Error: Error: Dynamic server usage: Route /terms couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /terms couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+  Generating static pages using 7 workers (18/25) 
+Header Auth Error: Error: Dynamic server usage: Route /vibe couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at n (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:1:16503)
+    at t (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\_be7a2eb0._.js:38:68)
+    at p (C:\Users\jparg\Downloads\technews26\.next\server\chunks\ssr\[root-of-the-server]__0d6bd908._.js:1:1963)
+    at stringify (<anonymous>) {
+  description: "Route /vibe couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Γ£ô Generating static pages using 7 workers (25/25) in 3.3s
+  Finalizing page optimization ...
+
+Route (app)
+Γöî ╞Æ /
+Γö£ ╞Æ /_not-found
+Γö£ ╞Æ /about
+Γö£ ╞Æ /admin
+Γö£ ╞Æ /admin/ads
+Γö£ ╞Æ /admin/articles
+Γö£ ╞Æ /admin/articles/new
+Γö£ ╞Æ /admin/categories
+Γö£ ╞Æ /admin/dashboard
+Γö£ ╞Æ /admin/login
+Γö£ ╞Æ /admin/settings
+Γö£ ╞Æ /api/admin/posts
+Γö£ ╞Æ /api/chat
+Γö£ ╞Æ /api/test-posts
+Γö£ ╞Æ /apple
+Γö£ ╞Æ /auth/callback
+Γö£ ╞Æ /contact
+Γö£ ╞Æ /dashboard
+Γö£ ╞Æ /forgot-password
+Γö£ Γùï /icon.png
+Γö£ ╞Æ /login
+Γö£ ╞Æ /mwc
+Γö£ Γùï /opengraph-image.png
+Γö£ ╞Æ /post/[slug]
+Γö£ ╞Æ /privacy
+Γö£ ╞Æ /signup
+Γö£ ╞Æ /terms
+Γöö ╞Æ /vibe
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
