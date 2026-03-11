@@ -47,6 +47,14 @@ export default function BentoFeed() {
                     </div>
                 </div>
 
+                {/* Widget: Thought of the Day */}
+                <div className="glass p-4 rounded-2xl bg-black/20 relative overflow-hidden backdrop-blur-sm border border-white/5">
+                    <span className="text-xs font-bold text-[var(--color-neon-cyan)] uppercase tracking-wider mb-2 block">Thought of the Day</span>
+                    <p className="text-sm text-zinc-300 italic relative z-10">
+                        &quot;Automation is cost cutting. AI is value creation.&quot;
+                    </p>
+                </div>
+
             </div>
         </div>
     );
