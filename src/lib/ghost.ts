@@ -137,10 +137,11 @@ export async function getSinglePost(postSlug: string) {
                 const { data, error } = await query.maybeSingle();
 
                 if (!error && data) {
+                    const row: any = data;
                     return mapRowToPost({
-                        ...data,
-                        html: data.html ?? data.content,
-                        feature_image: data.feature_image ?? data.featured_image,
+                        ...row,
+                        html: row.html ?? row.content,
+                        feature_image: row.feature_image ?? row.featured_image,
                     });
                 }
                 if (error) console.error(`Supabase getSinglePost (${table}) error:`, error.message);
@@ -259,6 +260,39 @@ function mockPosts() {
             html: "<h2>The Ultimate Integrated Platform</h2><p>Nvidia already dominates the AI and GPU markets, but a massive void remains: the central processor. Rumors indicate a collaboration with MediaTek to produce a robust ARM-based CPU for consumer and commercial PCs.</p><h3>Synergy with RTX</h3><p>A unified architecture featuring a custom Nvidia CPU and an integrated high-performance GeForce RTX GPU could redefine the modern high-end laptop, similar to how Apple unified its ecosystem with M-series chips.</p><h2>FAQ: Nvidia CPU Rumors</h2><h3>When would an Nvidia CPU launch?</h3><p>Analysts project an official announcement by early 2026, with consumer devices arriving later that year.</p>",
             authors: [{ name: "Tech Hunter AI" }],
             tags: [{ name: "Nvidia" }]
+        },
+        {
+            id: "vc1",
+            slug: "vibe-coding-frontend-future",
+            title: "Vibe Coding: The Future of Frontend Development",
+            custom_excerpt: "Forget writing boilerplate HTML and CSS. Vibe coding allows you to generate complete user interfaces by simply describing what you want.",
+            feature_image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
+            published_at: new Date().toISOString(),
+            html: "<h2>What is Vibe Coding?</h2><p>Vibe coding is the practice of using AI tools to generate code based on natural language descriptions or visual references.</p><h3>The Impact on Frontend</h3><p>This approach drastically reduces the time spent on mundane tasks, allowing developers to focus on architecture and complex logic.</p>",
+            authors: [{ name: "Tech Hunter AI" }],
+            tags: [{ name: "Vibe Coding" }, { name: "AI" }]
+        },
+        {
+            id: "vc2",
+            slug: "mastering-prompt-engineering-vibe-coding",
+            title: "Mastering Prompt Engineering for Vibe Coding",
+            custom_excerpt: "The secret to successful vibe coding lies in the prompt. Learn how to craft perfect descriptions to get exactly the UI you envision.",
+            feature_image: "https://images.unsplash.com/photo-1677442135136-760c813028c0?auto=format&fit=crop&q=80&w=1200",
+            published_at: new Date(Date.now() - 86400000).toISOString(),
+            html: "<h2>The Art of the Prompt</h2><p>When vibe coding, your words are your compiler. Being specific about layout constraints, color palettes, and interactive states is crucial.</p><h3>Iterative Refinement</h3><p>Don't expect perfection on the first try. The key is iterative refinement, adjusting your prompt based on the AI's output.</p>",
+            authors: [{ name: "Tech Hunter AI" }],
+            tags: [{ name: "Vibe Coding" }, { name: "Tutorials" }]
+        },
+        {
+            id: "vc3",
+            slug: "top-5-vibe-coding-tools-2026",
+            title: "Top 5 Tools for Vibe Coding in 2026",
+            custom_excerpt: "A comprehensive roundup of the best AI-powered development environments that support true vibe coding workflows.",
+            feature_image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1200",
+            published_at: new Date(Date.now() - 172800000).toISOString(),
+            html: "<h2>The Toolscape is Evolving</h2><p>We evaluate the latest contenders in the AI IDE space, focusing on their ability to understand context and generate production-ready code.</p><h3>Our Top Picks</h3><p>From visual builders to terminal-integrated agents, here are the tools leading the vibe coding revolution.</p>",
+            authors: [{ name: "Tech Hunter AI" }],
+            tags: [{ name: "Vibe Coding" }, { name: "Tools" }]
         }
     ];
 }
