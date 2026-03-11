@@ -9,38 +9,51 @@ export const api = new GhostContentAPI({
     version: "v5.0"
 });
 
-export async function getPosts(limit = 10) {
-    // 1) If Supabase is configured, prefer it
-    if (supabase) {
-        try {
-            const { data, error } = await supabase
-                .from('posts')
-                .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-                .order('published_at', { ascending: false })
-                .limit(limit);
+function mapRowToPost(row: any) {
+    return {
+        id: row.id,
+        slug: row.slug,
+        title: row.title,
+        custom_excerpt: row.custom_excerpt ?? row.excerpt ?? null,
+        feature_image: row.feature_image ?? row.featured_image ?? null,
+        published_at: row.published_at,
+        html: row.html ?? row.content ?? null,
+        authors: row.author_name ? [{ name: row.author_name }] : [],
+        tags: Array.isArray(row.tags)
+            ? row.tags.map((name: string) => ({ name }))
+            : [],
+    };
+}
 
-            if (!error && data && (!Array.isArray(data) || data.length > 0)) {
-                return data.map((row: any) => ({
-                    id: row.id,
-                    slug: row.slug,
-                    title: row.title,
-                    custom_excerpt: row.excerpt,
-                    feature_image: row.feature_image,
-                    published_at: row.published_at,
-                    html: row.html,
-                    authors: row.author_name ? [{ name: row.author_name }] : [],
-                    tags: Array.isArray(row.tags)
-                        ? row.tags.map((name: string) => ({ name }))
-                        : [],
-                }));
+export async function getPosts(limit = 10) {
+    // 1) If Supabase is configured, try posts table then articles table
+    if (supabase) {
+        for (const table of ['posts', 'articles'] as const) {
+            try {
+                const cols = table === 'posts'
+                    ? 'id, slug, title, custom_excerpt, feature_image, published_at, html, author_name, tags'
+                    : 'id, slug, title, custom_excerpt, featured_image, published_at, content, author_name, tags';
+                let query = supabase.from(table).select(cols).order('published_at', { ascending: false }).limit(limit);
+                if (table === 'articles') {
+                    query = query.eq('status', 'published');
+                }
+                const { data, error } = await query;
+
+                if (!error && Array.isArray(data) && data.length > 0) {
+                    return data.map((row: any) => mapRowToPost({
+                        ...row,
+                        html: row.html ?? row.content,
+                        feature_image: row.feature_image ?? row.featured_image,
+                    }));
+                }
+                if (error) console.error(`Supabase getPosts (${table}) error:`, error.message);
+            } catch (e) {
+                console.error(`Supabase getPosts (${table}) exception:`, e);
             }
-            if (error) console.error('Supabase getPosts error:', error);
-        } catch (e) {
-            console.error('Supabase getPosts exception:', e);
         }
     }
 
-    // 2) If Ghost is not configured, use mock data
+    // 2) Fallback: Ghost or mock data
     if (!process.env.GHOST_API_URL) {
         return mockPosts();
     }
@@ -61,40 +74,85 @@ export async function getPosts(limit = 10) {
     }
 }
 
-export async function getSinglePost(postSlug: string) {
-    // 1) Supabase first if available
+export async function getPostsByTag(tag: string, limit = 10) {
+    // 1) If Supabase is configured, try posts table then articles table
     if (supabase) {
-        try {
-            const { data, error } = await supabase
-                .from('posts')
-                .select('id, slug, title, excerpt:custom_excerpt, feature_image, published_at, html, author_name, tags')
-                .eq('slug', postSlug)
-                .maybeSingle();
+        for (const table of ['posts', 'articles'] as const) {
+            try {
+                const cols = table === 'posts'
+                    ? 'id, slug, title, custom_excerpt, feature_image, published_at, html, author_name, tags'
+                    : 'id, slug, title, custom_excerpt, featured_image, published_at, content, author_name, tags';
+                let query = supabase.from(table).select(cols).contains('tags', [tag]).order('published_at', { ascending: false }).limit(limit);
+                if (table === 'articles') {
+                    query = query.eq('status', 'published');
+                }
+                const { data, error } = await query;
 
-            if (!error && data) {
-                return {
-                    id: data.id,
-                    slug: data.slug,
-                    title: data.title,
-                    custom_excerpt: data.excerpt,
-                    feature_image: data.feature_image,
-                    published_at: data.published_at,
-                    html: data.html,
-                    authors: data.author_name ? [{ name: data.author_name }] : [],
-                    tags: Array.isArray(data.tags)
-                        ? data.tags.map((name: string) => ({ name }))
-                        : [],
-                };
+                if (!error && Array.isArray(data) && data.length > 0) {
+                    return data.map((row: any) => mapRowToPost({
+                        ...row,
+                        html: row.html ?? row.content,
+                        feature_image: row.feature_image ?? row.featured_image,
+                    }));
+                }
+                if (error) console.error(`Supabase getPostsByTag (${table}) error:`, error.message);
+            } catch (e) {
+                console.error(`Supabase getPostsByTag (${table}) exception:`, e);
             }
-            if (error) console.error('Supabase getSinglePost error:', error);
-        } catch (e) {
-            console.error('Supabase getSinglePost exception:', e);
         }
     }
 
-    // 2) If Ghost is not configured, use mock data
+    // 2) Fallback: Ghost or mock data
     if (!process.env.GHOST_API_URL) {
-        return mockPosts().find(post => post.slug === postSlug);
+        return mockPosts().filter(post => post.tags.some(t => t.name.toLowerCase() === tag.toLowerCase())).slice(0, limit);
+    }
+
+    try {
+        return await api.posts
+            .browse({
+                limit,
+                filter: `tag:${tag.toLowerCase()}`,
+                include: 'tags,authors',
+            })
+            .catch((err: any) => {
+                console.error(err);
+                return mockPosts().filter(post => post.tags.some(t => t.name.toLowerCase() === tag.toLowerCase())).slice(0, limit);
+            });
+    } catch (error) {
+        console.error(error);
+        return mockPosts().filter(post => post.tags.some(t => t.name.toLowerCase() === tag.toLowerCase())).slice(0, limit);
+    }
+}
+
+export async function getSinglePost(postSlug: string) {
+    // 1) Supabase: try posts then articles
+    if (supabase) {
+        for (const table of ['posts', 'articles'] as const) {
+            try {
+                const cols = table === 'posts'
+                    ? 'id, slug, title, custom_excerpt, feature_image, published_at, html, author_name, tags'
+                    : 'id, slug, title, custom_excerpt, featured_image, published_at, content, author_name, tags';
+                let query = supabase.from(table).select(cols).eq('slug', postSlug);
+                if (table === 'articles') query = query.eq('status', 'published');
+                const { data, error } = await query.maybeSingle();
+
+                if (!error && data) {
+                    return mapRowToPost({
+                        ...data,
+                        html: data.html ?? data.content,
+                        feature_image: data.feature_image ?? data.featured_image,
+                    });
+                }
+                if (error) console.error(`Supabase getSinglePost (${table}) error:`, error.message);
+            } catch (e) {
+                console.error(`Supabase getSinglePost (${table}) exception:`, e);
+            }
+        }
+    }
+
+    // 2) Fallback: Ghost or mock data
+    if (!process.env.GHOST_API_URL) {
+        return mockPosts().find(post => post.slug === postSlug) ?? null;
     }
 
     try {

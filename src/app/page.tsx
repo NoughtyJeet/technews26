@@ -1,18 +1,21 @@
 import React from 'react';
 import Sidebar from '@/components/layout/Sidebar';
 import BentoGrid, { BentoCard } from '@/components/layout/BentoGrid';
-import { getPosts } from '@/lib/ghost';
+import { getPosts, getPostsByTag } from '@/lib/ghost';
 import LiveTechPulse from '@/components/widgets/LiveTechPulse';
 import GadgetVault from '@/components/widgets/GadgetVault';
 import BentoFeed from '@/components/widgets/BentoFeed';
 import YouTubeWidget from '@/components/widgets/YouTubeWidget';
+import VibeCodingSlider from '@/components/widgets/VibeCodingSlider';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
-  let posts = [];
+  let posts: any[] = [];
+  let vibePosts: any[] = [];
   try {
     posts = await getPosts(5);
+    vibePosts = await getPostsByTag('Vibe Coding', 3);
   } catch (error) {
     console.error('Home Page Fetch Error:', error);
   }
@@ -101,6 +104,13 @@ export default async function Home() {
               </div>
             </BentoCard>
           ))}
+
+          {/* Vibe Coding Slider */}
+          {vibePosts && vibePosts.length > 0 && (
+            <BentoCard colSpan={3} rowSpan={1} className="w-full flex p-0">
+              <VibeCodingSlider posts={vibePosts} />
+            </BentoCard>
+          )}
         </BentoGrid>
       </main>
     </div>
