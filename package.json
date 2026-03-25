@@ -16,6 +16,7 @@
     "@supabase/ssr": "^0.9.0",
     "@supabase/supabase-js": "^2.99.0",
     "@tryghost/content-api": "^1.12.5",
+    "@vercel/analytics": "^2.0.0",
     "ai": "^6.0.105",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
